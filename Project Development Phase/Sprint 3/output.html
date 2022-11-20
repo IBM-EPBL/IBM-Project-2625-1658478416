@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		.header{
+		background: linear-gradient( white);
+		background:-webkit-linear-gradient( white);
+		background:-moz-linear-gradient( white);
+		background:-o-linear-gradient( white);
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		width: 100%;
+		height: 100px;
+		text-align: center;
+		text-transform: capitalize;
+	}
+	.log_img
+	{
+	height: 650px;
+	margin-top: 0px;
+	
+	
+	}
+
+	.app {
+		height: 500px;
+		width: 600px;
+		
+		margin: 100px auto ;
+		
+		color: black;
+		
+	}
+	</style>
+	<title> Classification results</title>
+</head>
+<body style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUca_8lCQ4xwKf2ox9oPMwRbe2M_0DP8b13w&usqp=CAU');background-repeat: no-repeat;background-size: cover;>
+	<div>
+		<header class="header">
+		
+			<h1>Application Status </h1> 
+		
+		</header>
+	</div>
+	<div class="log_img">
+	<div class="app">
+		<section>
+	<table align="center">	
+		<th>
+
+	<table align="center"> 
+        <th>
+    
+	{% if output== 1 %}
+    <br><br>
+    <h1 style="text-align: center; font-size: 35px;">Congratulations, You are eligible for the Loan !</h1>
+    
+    <br><br>
+	
+    {% elif output==0 %}
+    <h1 style="text-align: center; font-size: 35px;">Sorry, you did not match our eligibility criteria !</h1>
+    
+	{% endif %}
+    </th>
+    </table>
+
+	</th>
+	</table>
+		</section>
+	</div>
+
+	<div>
+		<footer>
+			
+		</footer>
+	</div>
+</div>
+
+</body>
+</html>
