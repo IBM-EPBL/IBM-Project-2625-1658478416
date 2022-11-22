@@ -21,5 +21,8 @@ from hello_world import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('submit/',views.submit,name='submit'),
-    path('', views.index)
+    path('', views.index),
+    path('signup/', views.submitsign),
+    path('signup_auth/',views.signup_auth,name='signup_auth'),
+    #path('home/', views.homepage)
 ]

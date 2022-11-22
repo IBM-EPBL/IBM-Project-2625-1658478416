@@ -19,7 +19,7 @@ body {
 }
 
 .screen {		
-	background: linear-gradient(90deg, #5D54A4, #7C78B8);		
+	background: linear-gradient(90deg, #cac3ff, #bab6fa);		
 	position: relative;	
 	height: 600px;
 	width: 360px;	
@@ -69,7 +69,7 @@ body {
 .screen__background__shape3 {
 	height: 540px;
 	width: 190px;
-	background: linear-gradient(270deg, #5D54A4, #6A679E);
+	background: linear-gradient(270deg, #c8c1ff, #cdcaff);
 	top: -24px;
 	right: 0;	
 	border-radius: 32px;
@@ -91,10 +91,15 @@ body {
 }
 
 .login__field {
+	
 	padding: 20px 0px;	
 	position: relative;	
 }
-
+.login__field1 {
+	width:400px;
+	padding: 20px 0px;	
+	position: relative;	
+}
 .login__icon {
 	position: absolute;
 	top: 30px;

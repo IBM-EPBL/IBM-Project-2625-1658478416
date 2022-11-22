@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>IBM - Smart Lender</title>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'> 
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+	<div style="height: 1200px; width: 500px; background: linear-gradient(90deg, #ffffff, #ccc8fb);" class="screen">
+		<div class="screen__content">
+			<form class="login" action='/submit/' method="POST">
+				{% csrf_token %}
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Name }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Age }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Gender }}
+				</div>
+				
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Married }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Dependents }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Education }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-user"></i>
+					{{ form.Self_Employed }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-lock"></i>
+					{{ form.ApplicantIncome }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-lock"></i>
+					{{ form.CoapplicantIncome }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-lock"></i>
+					{{ form.LoanAmount }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-lock"></i>
+					{{ form.Property_Area }}
+				</div>
+				<div class="login__field1">
+					<i class="login__icon fas fa-lock"></i>
+					{{ form.Loan_Status }}
+				</div>
+				<button class="button login__submit">
+					<span class="button__text">Log In Now</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>				
+			</form>
+			<div class="social-login">
+				<div class="social-icons">
+					<img src="http://www.sdaci.com/wp-content/uploads/2016/11/IBM-logo.png" alt="IBM Logo" style="width:75px;height:40px;">
+				</div>
+			</div>
+		</div>
+		<div class="screen__background">
+			<span style="background: #d9d7ff;" class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>		
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>		
+	</div>
+</div>
+<!-- partial -->
+  
+</body>
+</html>
