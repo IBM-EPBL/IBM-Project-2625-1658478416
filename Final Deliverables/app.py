@@ -4,8 +4,83 @@ import numpy as np
 from flask import render_template, request
 from flask_cors import CORS
 
+import smtplib
 import requests
 import json
+
+import pyrebase
+
+
+firebaseConfig = {
+  'apiKey' : "AIzaSyBwc1_f3i-y3W2ClhX6BimI3rJd9YrbDjw",
+  'authDomain' : "smart-lender-1639b.firebaseapp.com",
+  'projectId' : "smart-lender-1639b",
+  'storageBucket' : "smart-lender-1639b.appspot.com",
+  'messagingSenderId' : "89081040576",
+  'appId' : "1:89081040576:web:9e721303632308e2646725",
+  'measurementId' : "G-F3C4GXSCC0",
+  'databaseURL' : "none"
+}
+
+
+firebase=pyrebase.initialize_app(firebaseConfig)
+auth=firebase.auth()
+
+def sendmail(receiver):
+    gmail_user = 'mailpraveen927@gmail.com'
+    gmail_password = 'xxxxxxxx'
+    sent_from = gmail_user
+    to = [receiver]
+    from_ = "From: {}".format(sent_from)
+    to_ = "To: {}".format(receiver)
+    subject = "Subject: Smart Lender Verification Email"
+    body = "Thanks for using our service"
+    message = from_ + "\n" + to_ + "\n" + subject + "\n" + body
+
+
+    try:
+        smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        smtp_server.ehlo()
+        smtp_server.login(gmail_user, gmail_password)
+        smtp_server.sendmail(sent_from, to, message)
+        smtp_server.close()
+        print ("Email sent successfully!")
+    except Exception as ex:
+        print ("Something went wrong….",ex)
+
+def login(email,password):
+	try:
+		login = auth.sign_in_with_email_and_password(email,password)
+		print("Successfully logged in!")
+		return 1
+	except Exception as e:
+		t = json.loads(e.args[1])
+		if(t['error']['errors'][0]['message']=="EMAIL_NOT_FOUND"):
+			return signup(email,password)
+		return 0
+		
+def signup(email,password):
+    try:
+        user = auth.create_user_with_email_and_password(email,password)
+        sendmail(email)
+        return 1
+
+    except Exception as e:
+        #t = json.loads(e.args[1])
+        #print(t['error']['code'])
+        print(e)
+        return 0
+
+
+
+def submit(email,password):
+    if(login(email,password)):
+        return 1
+    else:
+        print("Problem")
+        return 0
+    
+
 # NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
 API_KEY = "zJXNS7RuxksoVPyMjZDER8bqMSbF3OvzzuZZWw5FnpMU"
 token_response = requests.post('https://iam.cloud.ibm.com/identity/token', data={"apikey":
@@ -17,9 +92,19 @@ header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + mltok
 app = flask.Flask(__name__,template_folder='template')
 CORS(app)
  
+
 @app.route('/', methods=['GET'])
+def sendLoginPage():
+    return render_template('login.html')
+@app.route('/home', methods=['POST'])
 def sendHomePage():
-    return render_template('home.html')
+	if request.method == 'POST':
+		email = request.form['email']
+		password = request.form['password']
+		if(submit(email,password)):
+			return render_template('home.html')
+	return render_template('login.html')
+
 @app.route('/index', methods=['GET'])
 def sendRegistrationPage():
     return render_template('index.html')
@@ -74,25 +159,25 @@ def prediction():
 	credit = int(credit)
 	#x =np.array([[0,gender, married, dependat,education,employ,annual_income,co_income,Loan_amount,Loan_amount_term,credit,proper]])
 	x =[0,gender, married, dependat,education,employ,annual_income,co_income,Loan_amount,Loan_amount_term,credit,proper]
-	#model = joblib.load('R.pkl')
+	# model = joblib.load('R.pkl')
 	
-	#ans = int(model.predict(x)[0])
-	#if (ans==1):
-		#print("You are eligible. Kindly wait for further notice")
-	#else:
-		#print("Your application status did not match our criteria")
+	# ans = int(model.predict(x)[0])
+	# if (ans==1):
+	# 	print("You are eligible. Kindly wait for further notice")
+	# else:
+	# 	print("Your application status did not match our criteria")
 
-	payload_scoring = {"input_data": [{"field": ["","Gender","Married","Dependents","Education","Self_Employed","ApplicantIncome","CoapplicantIncome","LoanAmount","Loan_Amount_Term","Credit_History","Property_Area"], "values": [[0,0,0,0,0,0,4547,0.0,115.0,360,1,1], [0,0,0,0,0,0,4947,0.0,105.0,361,1,1]]}]}
+	payload_scoring = {"input_data": [{"field": ["","Gender","Married","Dependents","Education","Self_Employed","ApplicantIncome","CoapplicantIncome","LoanAmount","Loan_Amount_Term","Credit_History","Property_Area"], "values": [x]}]}
 
 	response_scoring = requests.post('https://us-south.ml.cloud.ibm.com/ml/v4/deployments/77f857ff-c248-41f7-b24f-2a3128ac1906/predictions?version=2022-11-22', json=payload_scoring,
 	headers={'Authorization': 'Bearer ' + mltoken})
 	print("Scoring response")
 	pred = response_scoring.json()
 	p = pred['predictions'][0]['values'][0][0]
-	if(pred == 0):
-		print("You are not eligible")
+	if(p == 0):
+		print("Your application status did not match our criteria")
 	else:
-		print("You are eligible")
+		print("You are eligible. Kindly wait for further notice")
 	
 	return render_template('output.html', output=p)
 
