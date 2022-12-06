@@ -1,0 +1,12 @@
+Activity List :
+
+In Project Management Planning is an important task to scheduling the phrase of the project to
+the Team Member.
+
+In this Activity can shows the various activity are allocated and Done by the Team Members! In
+Project we can Split into the Four Step of Phrases are:
+
+Phrase 1: Information Collection and Requirement Analysis
+Phrase 2: Project Planning and Developing Modules
+Phrase 3: Implementing the High Accuracy Deep Learning Algorithm to Perform
+Phrase 4: Deploying the Model on Cloud and Testing the Model and UI Performance
