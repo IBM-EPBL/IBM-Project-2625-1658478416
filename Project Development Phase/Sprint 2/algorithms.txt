@@ -1,0 +1,6 @@
+Classification Algorithms 
+
+1.Decision Tree
+2.Random forest
+3.KNN (K Nearest Neighbour)
+4.XG-boost
